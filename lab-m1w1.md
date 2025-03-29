@@ -19,9 +19,9 @@ Hands-on: ELT Pipeline Development
 This lab guides you through building an ELT (Extract, Load, Transform) pipeline using Python, DuckDB, and Parquet files. The goal is to extract Pokémon data from an API, store it in Parquet files, load it into a database, and perform basic transformations.
 
 > **Data Sources:**
-> 
+>
 > We'll use the [PokeAPI](https://pokeapi.co/), a free > RESTful API providing comprehensive Pokémon data:
-> 
+>
 > - Endpoint: `https://pokeapi.co/api/v2/pokemon`
 > - Rate limit: 100 requests per minute
 > - No authentication required
@@ -30,7 +30,7 @@ This lab guides you through building an ELT (Extract, Load, Transform) pipeline 
 >   - Characteristics (height, weight)
 >   - Abilities and types
 >   - Base stats
-> 
+>
 > The API supports pagination through offset/limit parameters, making it ideal > for incremental data extraction.
 
 ## 🛠️ Prerequisites (1h)

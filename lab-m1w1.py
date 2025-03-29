@@ -34,10 +34,9 @@ def load_data():
     # Step 1: Connect to (or create) a DuckDB database
     con = duckdb.connect("pokedex.duckdb")
 
-    # Step 2: Create 'pokedex' table (replace it if it already exists)
-    con.execute("DROP TABLE IF EXISTS pokedex;")
+    # Step 2: Create or replace 'pokedex' table
     con.execute("""
-        CREATE TABLE pokedex AS
+        CREATE OR REPLACE TABLE pokedex AS
         SELECT * FROM read_parquet('pokemon_basic.parquet')
     """)
 
@@ -45,14 +44,37 @@ def load_data():
     con.close()
 
 def transform_data():
-  # your code here
-  pass
+    # Step 1: Connect to the DuckDB
+    con = duckdb.connect("pokedex.duckdb")
+
+    # Step 2: Load the pokedex table into a pandas DataFrame
+    df = con.execute("SELECT * FROM pokedex").fetchdf()
+
+    # Step 3: Perform transformations
+    total_pokemon = len(df)
+
+    # Extract Pokémon ID from the URL
+    df["id"] = df["url"].str.extract(r'/pokemon/(\d+)/').astype(int)
+
+    first_id = df["id"].min()
+    last_id = df["id"].max()
+
+    # Step 4: Return the results instead of printing
+    return {
+        "total_pokemon": total_pokemon,
+        "first_id": first_id,
+        "last_id": last_id
+    }
+
+    con.close()
 
 
 def main():
-  # data = extract_data(20)
-  # print(data)
+  message = extract_data()
+  print(message)
   load_data()
+  stats = transform_data()
+  print(stats)
 
 if __name__ == "__main__":
   main()
