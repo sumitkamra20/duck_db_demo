@@ -59,7 +59,7 @@ def transform_data():
     first_id = df["id"].min()
     last_id = df["id"].max()
 
-    # Step 4: Return the results instead of printing
+    # Step 4: Return the results
     return {
         "total_pokemon": total_pokemon,
         "first_id": first_id,
